@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-gray-200">
       {children}
-      {/* <div className="h-2 w-full bg-green-500 sm:bg-yellow-500 md:bg-orange-500 lg:bg-red-500 sticky bottom-0"></div> */}
+      <div className="h-2 w-full bg-green-500 sm:bg-yellow-500 md:bg-orange-500 lg:bg-red-500 sticky"></div>
       </body>
       {/* <footer className="row-start-3 flex gap-16 flex-wrap items-center justify-center">
       {navbarLinks.map((navlink,i) => {
