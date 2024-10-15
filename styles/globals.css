@@ -1,3 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Override the default Leaflet control buttons */
+.leaflet-control-layers,
+.leaflet-draw-toolbar {
+  @apply bg-white/50 border-0 backdrop-blur !rounded-lg p-2 flex flex-col gap-3;
+}
+
+.leaflet-bar a {
+  @apply hover:bg-gray-400 text-black font-bold py-2 px-3 rounded-md;
+}
+
+.leaflet-draw-actions li a {
+  @apply flex justify-center items-center bg-black hover:bg-gray-600 text-white font-bold py-2 px-3 !rounded-md border-0;
+}
+.leaflet-draw-actions {
+  @apply !flex !gap-2 !mr-7;
+}
+
+/* Style the edit and delete buttons */
+.leaflet-draw-edit-remove a {
+  @apply bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-3 rounded-md;
+}
+
+/* Make the toolbar smaller */
+.leaflet-bar a {
+  @apply w-10 h-10 flex items-center justify-center;
+}
+
+/* Style the layer control */
+.leaflet-control-layers-toggle {
+  @apply shadow-md rounded-lg p-2 cursor-pointer bg-white/50 border-0 backdrop-blur;
+}
+
+/* Optional: Style the buttons when active */
+.leaflet-draw-toolbar a.active {
+  @apply bg-blue-600 text-white;
+}
+.leaflet-control-layers-selector {
+  @apply bg-white/50 border-0 backdrop-blur;
+}
