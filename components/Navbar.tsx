@@ -1,92 +1,99 @@
 'use client';
-import React from 'react';
-import Link from 'next/link';
-import { PiDroneDuotone } from 'react-icons/pi';
-import { Dialog, DialogContent, DialogTrigger } from './ui/dialog';
-import { Button } from './ui/button';
+import React, { useState } from 'react';
+import Image from 'next/image';
 
 const Navbar = () => {
+  const [activeMenu, setActiveMenu] = useState('Welcome'); // Initial state
+
+  const handleMenuClick = (menu: string) => {
+    setActiveMenu(menu); // Update active menu
+  };
+
+  // Define content (Image or icon) based on active menu
+  const getContent = (menu: string) => {
+    switch (menu) {
+      case 'Welcome':
+        return (
+          <>
+            <div className='flex flex-row'>
+            <Image
+              src="/Map.png" // Map image for 'Welcome' menu
+              alt="drone"
+              width={25}
+              height={33}
+              className="object-contain"
+            />
+            <span className="ml-2">Welcome</span> {/* Add the text next to the image */}
+            </div>
+          </>
+        );
+      case 'Our Product':
+        return '📦 Our Product'; // Product icon and text
+      case 'How To Use':
+        return '📚 How To Use'; // Instruction icon and text
+      case 'About Us':
+        return 'ℹ️ About Us'; // Info icon and text
+      case 'Join Now':
+        return '🍽️ Join Now'; // Menu icon and text
+      case 'Menu 2':
+        return '🍽️ Menu 2'; // Menu icon and text
+      default:
+        return '❓ Unknown'; // Default icon and text
+    }
+  };
+
   return (
-    <nav className="z-50 fixed w-full dark:shadow-none ">
-      <div className="flex items-center justify-between rounded-xl px-3 py-2">
-        <Link
-          href="/"
-          className="flex items-center gap-2 select-none bg-white rounded-md px-2"
-        >
-          <PiDroneDuotone className="text-5xl" />
-          <p className="text-2xl font-bold text-black max-md:hidden">
-            Drone<span className="text-emerald-500"> Analytic</span>
-          </p>
-        </Link>
-        <div className="flex justify-end gap-7 ">
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button className="bg-white">About Us</Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[1000px] bg-white overflow-y-auto max-h-[800px]">
-              <div className="p-8 bg-white text-gray-900">
-                <div className="max-w-4xl mx-auto">
-                  <h1 className="text-4xl font-bold mb-6 text-center">
-                    About Us
-                  </h1>
+    <nav
+      className="z-50 fixed w-full mt-4 px-4 bg-white rounded-[64px] shadow-md border-2 border-transparent bg-clip-padding"
+      style={{
+        backgroundImage: 'linear-gradient(#ffffff, #ffffff), linear-gradient(to right, #C0E888, #AEEFEF)',
+        backgroundOrigin: 'padding-box',
+        backgroundClip: 'padding-box, border-box',
+      }}
+    >
+      <div className="flex justify-between items-center">
+        {/* Left Navigation Links */}
+        <div className="flex gap-10">
+          <button
+            onClick={() => handleMenuClick('Welcome')}
+            className="text-[#1E1E1E] font-bold text-lg focus:outline-none"
+          >
+            Welcome
+          </button>
+          <button
+            onClick={() => handleMenuClick('Our Product')}
+            className="text-[#1E1E1E] font-bold text-lg focus:outline-none"
+          >
+            Our Product
+          </button>
+          <button
+            onClick={() => handleMenuClick('How To Use')}
+            className="text-[#1E1E1E] font-bold text-lg focus:outline-none"
+          >
+            How To Use
+          </button>
+        </div>
 
-                  {/* Mission Section */}
-                  <section className="mb-10">
-                    <h2 className="text-2xl font-semibold mb-3">Our Mission</h2>
-                    <p className="text-lg leading-relaxed">
-                      Our mission is to empower businesses and teams to achieve
-                      their goals through streamlined project management
-                      solutions. We focus on providing intuitive tools that
-                      enhance productivity, improve collaboration, and ensure
-                      successful project delivery.
-                    </p>
-                  </section>
+        {/* Center Section with dynamic image or icon and text */}
+        <div className="flex items-center gap-2 select-none rounded-md px-4 py-2 shadow-sm">
+          <div className="text-2xl font-bold text-[#1E1E1E]">{getContent(activeMenu)}</div>
+        </div>
 
-                  {/* Technology Section */}
-                  <section className="mb-10">
-                    <h2 className="text-2xl font-semibold mb-3">Technology</h2>
-                    <p className="text-lg leading-relaxed">
-                      Our platform is built using the latest web technologies
-                      including React, Next.js, and Node.js, ensuring top-notch
-                      performance and scalability. We prioritize data security
-                      and scalability, integrating with leading cloud providers
-                      to deliver a reliable and secure experience for our users.
-                    </p>
-                  </section>
-
-                  {/* Team Section */}
-                  <section className="mb-10">
-                    <h2 className="text-2xl font-semibold mb-3">
-                      Meet the Team
-                    </h2>
-                    <p className="text-lg leading-relaxed mb-6">
-                      We are a team of passionate professionals dedicated to
-                      transforming how projects are managed. Our diverse
-                      backgrounds, from software development to business
-                      strategy, enable us to create solutions that meet the real
-                      needs of project teams worldwide.
-                    </p>
-
-                    {/* Team Members */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      <div className="text-center">
-                        <p className="font-bold text-lg">John Doe</p>
-                        <p className="text-sm text-gray-500">CEO & Founder</p>
-                      </div>
-                      <div className="text-center">
-                        <p className="font-bold text-lg">Jane Smith</p>
-                        <p className="text-sm text-gray-500">CTO</p>
-                      </div>
-                      <div className="text-center">
-                        <p className="font-bold text-lg">Robert Johnson</p>
-                        <p className="text-sm text-gray-500">Lead Developer</p>
-                      </div>
-                    </div>
-                  </section>
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
+        {/* top Navigation Links */}
+        <div className="flex gap-10">
+          <button
+            onClick={() => handleMenuClick('About Us')}
+            className="text-[#1E1E1E] font-bold text-lg focus:outline-none"
+          >
+            About Us
+          </button>
+          <button
+            onClick={() => handleMenuClick('Join Now')}
+            className="text-[#1E1E1E] font-bold text-lg focus:outline-none"
+          >
+            Join Now
+          </button>
+          
         </div>
       </div>
     </nav>

@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
 import '../styles/globals.css';
-import Navbar from '@/components/Navbar';
-import LeftSidebar from '@/components/LeftSidebar';
-import Map from '@/components/Map';
+import ClientWrapper from '@/components/ClientWrapper';
 
 export const metadata: Metadata = {
   title: 'Drone Analytic',
   description: 'Drone Analytic website for blablablablas',
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -16,14 +15,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-gray-200 relative">
-        <Navbar />
-        <div className="flex">
-          {children && <LeftSidebar child={children} />}
-
-          <section className="flex min-h-screen w-full flex-col">
-            <Map />
-          </section>
-        </div>
+        
+        <ClientWrapper>{children}</ClientWrapper>
       </body>
     </html>
   );

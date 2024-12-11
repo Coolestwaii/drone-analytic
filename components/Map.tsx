@@ -89,7 +89,7 @@ const Map = () => {
         {/* LayersControl allows switching between different map views */}
         <LayersControl position="bottomright">
           {/* Street View layer */}
-          <LayersControl.BaseLayer name="Street View">
+          <LayersControl.BaseLayer checked name="Street View">
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -97,7 +97,7 @@ const Map = () => {
           </LayersControl.BaseLayer>
 
           {/* Satellite View layer (checked by default) */}
-          <LayersControl.BaseLayer checked name="Satellite View">
+          <LayersControl.BaseLayer name="Satellite View">
             <TileLayer
               url="https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.png"
               attribution='&copy; CNES, Distribution Airbus DS, © Airbus DS, © PlanetObserver (Contains Copernicus Data) | &copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

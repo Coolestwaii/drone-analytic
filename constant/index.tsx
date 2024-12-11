@@ -5,6 +5,7 @@ export const projects = [
     description:
       'An extensive project focusing on sustainable urban development in Chiang Mai, enhancing infrastructure while preserving cultural heritage.',
     date: 'Jun 11, 2024 10:41 AM',
+    cover: 'https://placehold.co/150?text=Residential+Area&font=roboto',
     segmentation: [
       {
         item: 'Residential Area',
@@ -73,6 +74,7 @@ export const projects = [
     description:
       'Bangkok’s Smart City initiative focuses on integrating IoT and green energy to improve the quality of life for residents.',
     date: 'May 20, 2024 2:30 PM',
+    cover: 'https://placehold.co/150?text=Residential+Area&font=roboto',
     segmentation: [
       {
         item: 'Public Transit',
@@ -140,6 +142,7 @@ export const projects = [
     description:
       'A large-scale resort expansion project in Phuket, focusing on sustainable tourism and marine conservation efforts.',
     date: 'Aug 15, 2024 5:00 PM',
+    cover: 'https://placehold.co/150?text=Residential+Area&font=roboto',
     segmentation: [
       {
         item: 'Beachfront Villas',
@@ -206,6 +209,7 @@ export const projects = [
     description:
       'A restoration project for the ancient city of Ayutthaya, focusing on preserving historic temples and monuments.',
     date: 'Oct 5, 2024 9:00 AM',
+    cover: 'https://placehold.co/150?text=Residential+Area&font=roboto',
     segmentation: [
       {
         item: 'Wat Mahathat',
@@ -273,6 +277,7 @@ export const projects = [
     description:
       'A major infrastructure development project in Pattaya, improving coastal defenses and enhancing public spaces.',
     date: 'Dec 2, 2024 11:15 AM',
+    cover: 'https://placehold.co/150?text=Residential+Area&font=roboto',
     segmentation: [
       {
         item: 'Sea Wall',
