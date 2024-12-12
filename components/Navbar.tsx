@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react';
 import Image from 'next/image';
-
 const Navbar = () => {
   const [activeMenu, setActiveMenu] = useState('Welcome'); // Initial state
 
@@ -19,8 +18,8 @@ const Navbar = () => {
             <Image
               src="/Map.png" // Map image for 'Welcome' menu
               alt="drone"
-              width={25}
-              height={33}
+              width={23}
+              height={24}
               className="object-contain"
             />
             <span className="ml-2">Welcome</span> {/* Add the text next to the image */}
@@ -56,40 +55,42 @@ const Navbar = () => {
         <div className="flex gap-10">
           <button
             onClick={() => handleMenuClick('Welcome')}
-            className="text-[#1E1E1E] font-bold text-lg focus:outline-none"
+            className="text-[#1E1E1E] font-bold text-ms focus:outline-none"
           >
             Welcome
           </button>
           <button
             onClick={() => handleMenuClick('Our Product')}
-            className="text-[#1E1E1E] font-bold text-lg focus:outline-none"
+            className="text-[#1E1E1E] font-bold text-ms focus:outline-none"
           >
             Our Product
           </button>
+          {/* Left Navigation Links 
           <button
             onClick={() => handleMenuClick('How To Use')}
             className="text-[#1E1E1E] font-bold text-lg focus:outline-none"
           >
             How To Use
-          </button>
+          </button>*/}
         </div>
 
         {/* Center Section with dynamic image or icon and text */}
         <div className="flex items-center gap-2 select-none rounded-md px-4 py-2 shadow-sm">
-          <div className="text-2xl font-bold text-[#1E1E1E]">{getContent(activeMenu)}</div>
+          <div className="text-ms font-bold text-[#1E1E1E]">{getContent(activeMenu)}</div>
         </div>
 
         {/* top Navigation Links */}
         <div className="flex gap-10">
           <button
             onClick={() => handleMenuClick('About Us')}
-            className="text-[#1E1E1E] font-bold text-lg focus:outline-none"
+            className="text-[#1E1E1E] font-bold text-ms focus:outline-none"
           >
             About Us
           </button>
+        
           <button
             onClick={() => handleMenuClick('Join Now')}
-            className="text-[#1E1E1E] font-bold text-lg focus:outline-none"
+            className="text-[#1E1E1E] font-bold text-ms focus:outline-none"
           >
             Join Now
           </button>

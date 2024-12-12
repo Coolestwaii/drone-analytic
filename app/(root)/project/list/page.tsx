@@ -41,10 +41,10 @@ const ProjectList = () => {
   // If no project is found, show a message
   if (!project && !isAddingProject) {
     return (
-      <div className="p-6 space-y-6">
+      <div className="p-6 space-y-6 ">
         {/* Search Bar */}
         <div className="flex justify-between items-center mb-6">
-          <div className="flex items-center bg-gray-50 border-2 rounded-full w-full max-w-[400px] p-2 shadow-md">
+          <div className="flex items-center bg-gray-50 border-2 rounded-full w-full max-w-[500px] p-2 shadow-md">
             <AiOutlineSearch className="text-xl text-gray-400" />
             <input
               type="text"
@@ -56,10 +56,10 @@ const ProjectList = () => {
           </div>
           <button
             onClick={handleAddProjectClick}
-            className="bg-green-500 text-white px-4 rounded-full flex items-center gap-2 hover:bg-green-600 transition-colors"
+            className="bg-green-500 text-white p-2 ml-2 rounded-[10px] flex items-center gap-2 hover:bg-green-600 transition-colors"
           >
             <AiOutlinePlus />
-            <span>Add New Project</span>
+            <span>Project</span>
           </button>
         </div>
 
