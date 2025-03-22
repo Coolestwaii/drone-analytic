@@ -81,7 +81,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         formData.append("file", file, path.basename(orthophotoPath));
     
         // Get the Flask URL from environment variables.
-        const flaskUrl = process.env.FLASK_BUILDING_URL;
+        const flaskUrl = "process.env.FLASK_BUILDING_URL";
         if (!flaskUrl) {
           console.error("[BUILDING] FLASK_BUILDING_URL not defined in environment variables");
           return res.status(500).json({ error: "Flask endpoint not configured" });

@@ -126,6 +126,46 @@ $ npx prisma migrate dev --name init
 
 3.
 # -------------------------------------
+# 📦 How to run Flask Server fo Machine Leaning Model Inference
+# -------------------------------------
+
+# Before running the system, make sure to set the public NGROK URLs for each service in your environment variables or .env file:
+
+env
+
+$ FLASK_BUILDING_URL=https://your-ngrok-url-for-building.ngrok.io
+$ FLASK_GCP_URL=https://your-ngrok-url-for-gcp.ngrok.io
+# ✅ Quick Start
+# Get your NGROK auth token
+# Go to https://dashboard.ngrok.com/get-started and copy your auth token.
+
+# Paste the token into the notebook cell
+# Inside the notebook, find the cell that looks like this:
+
+python
+
+$ !ngrok config add-authtoken YOUR_NGROK_TOKEN
+# Replace YOUR_NGROK_TOKEN with your actual token.
+
+# Run all cells
+# Just click "Run All" in your Jupyter notebook. This will:
+
+# Start the Flask server
+
+# Load your model
+
+# Expose the server via NGROK
+
+# Print the public NGROK URL to use in your .env file
+
+# Copy the printed NGROK URL
+# Update your .env file with the printed NGROK URL so your frontend or orchestrator can call the API.
+
+# Once done, your Flask server will be up and ready to receive inference requests 🎯
+
+
+4.
+# -------------------------------------
 # 📦 How to run this Next.js project
 # -------------------------------------
 # 🧪 If not installed:
