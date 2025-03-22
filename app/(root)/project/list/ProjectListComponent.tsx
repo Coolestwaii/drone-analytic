@@ -1,6 +1,6 @@
 'use client';
 
-export const dynamic = 'force-dynamic';
+import dynamic from 'next/dynamic';
 export const fetchCache = 'force-no-store';
 
 import withAuth from '@/hoc/withAuth';
@@ -8,11 +8,12 @@ import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
-import AddProject from '@/components/AddProject'; 
 import Image from 'next/image'; 
 import { FaFilter } from "react-icons/fa";
 import Head from 'next/head';
 import { getSession } from 'next-auth/react'; // Import getSession to get user_id
+
+
 
 interface Project {
   id: string;
@@ -23,7 +24,13 @@ interface Project {
   image_url: string;
 }
 
+const AddProjectNoSSR = dynamic(() => import('@/components/AddProject'), {
+  ssr: false,
+});
+
 const ProjectList = () => {
+
+  
   const [clientSide, setClientSide] = useState(false);
   useEffect(() => {
     setClientSide(true);  // Set client-side flag when the component mounts
@@ -406,7 +413,7 @@ const ProjectList = () => {
 
   // Show Add Project Component when isAddingProject is true
   if (isAddingProject) {
-    return <AddProject isOpen={isAddingProject} onClose={() => setIsAddingProject(false)} />;
+    return <AddProjectNoSSR isOpen={isAddingProject} onClose={() => setIsAddingProject(false)} />;
   }
 
   return null;

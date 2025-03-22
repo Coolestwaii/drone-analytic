@@ -5,6 +5,7 @@ dotenv.config();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  productionBrowserSourceMaps: true,
   env: {
     LOCAL_STORAGE_URL: process.env.LOCAL_STORAGE_URL,
   },

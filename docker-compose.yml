@@ -4,7 +4,6 @@ services:
     container_name: dronemongo
     ports:
       - "27017:27017"
-    # Remove authentication by not setting the environment variables
     command: ["--noauth"]
     volumes:
       - mongodb_data:/data/db
@@ -23,6 +22,16 @@ services:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
 
+  nodeodm:
+    image: opendronemap/nodeodm
+    container_name: nodeodm
+    ports:
+      - "3001:3000"
+    volumes:
+      - nodeodm_data:/var/www/data
+    restart: unless-stopped
+
 volumes:
   mongodb_data:
   postgres_data:
+  nodeodm_data:

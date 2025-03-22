@@ -74,7 +74,57 @@ uvicorn fastapiserver.main:app --host 0.0.0.0 --port 8000
 # -------------------------------------
 # ✅ That’s it! You now have a working FastAPI + Next.js project sharing one .env
 
-2.
+
+# -------------------------------------
+# 🐳 How to run Docker containers for MongoDB, PostgreSQL and NodeODM
+# -------------------------------------
+# ✅ Prerequisites:
+# - Docker + Docker Compose must be installed
+# - .env file must exist in the project root (already included)
+# 🔐 Environment Variables You Must Provide Yourself
+# Some sensitive credentials are not included in the .env file and must be generated or retrieved manually:
+
+env.local
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+NEXTAUTH_SECRET=...
+
+
+# -------------------------------------
+# ▶️ 1. Start the containers
+docker-compose up -d
+#
+# This will start:
+# - 🟡 MongoDB at port 27017
+# - 🔵 PostgreSQL at port 5432
+# - 🟢 NodeODM at port 3001
+# -------------------------------------
+# ▶️ 2. Check that containers are running
+docker ps
+#
+# You should see:
+# - dronemongo
+# - dronepostgres
+# - nodeodm
+# -------------------------------------
+# ▶️ 3. Create the Postgres app user and grant access
+docker exec -it dronepostgres psql -U postgres -d dronedb
+#
+# Then run these SQL commands inside:
+CREATE USER appuser WITH PASSWORD '12345678'; GRANT ALL PRIVILEGES ON DATABASE dronedb TO appuser; GRANT ALL PRIVILEGES ON SCHEMA public TO appuser; \q
+#
+# -------------------------------------
+# ▶️ 4. Run Prisma to create tables
+npx prisma generate
+npx prisma migrate dev --name init
+#
+# -------------------------------------
+# Done! PostgreSQL and MongoDB are running,
+# NodeODM is ready to accept processing jobs.
+# Now go to step 3 to run the Next.js app frontend.
+
+
+3.
 # -------------------------------------
 # 📦 How to run this Next.js project
 # -------------------------------------
@@ -117,3 +167,33 @@ npm install
 # You can check yours with:
 node -v
 npm -v
+
+
+# ⚠️ Limitations with npm run build (Production Build)
+# In some environments, especially when using Leaflet with Next.js, you may encounter errors #like:
+
+javascript
+Copy
+Edit
+ReferenceError: window is not defined
+
+# This happens because:
+
+# Leaflet (and some other browser-only libraries) depend on the window object which is not  available during SSR (Server-Side Rendering).
+
+# Next.js tries to prerender pages during next build, which executes code in a Node.js environment — not the browser.
+
+# Workaround (Use npm run dev instead) If npm run build fails due to window is not defined, you can still run the app using:
+
+
+npm run dev
+# This starts the app in development mode where all rendering is handled client-side, and window is accessible.
+
+#💡 Why Leaflet causes issues
+ Leaflet does not officially support SSR. Even when marked with "use client" or dynamic(..., { ssr: false }), some of its sub-dependencies or plugins still assume window is present at build-time, leading to crashes during static optimization or production export.
+
+# Poosible Solutions:
+
+# Refactor components to import Leaflet only after typeof window !== 'undefined'
+
+# Or skip production builds entirely and run in dev mode for demos, presentations, or internal testing.
