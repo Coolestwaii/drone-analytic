@@ -41,3 +41,86 @@
 .leaflet-control-layers-selector {
   @apply bg-white/50 border-0 backdrop-blur;
 }
+
+::-webkit-scrollbar {
+  width: 13px;
+  height: fit-content;
+
+}
+
+
+::-webkit-scrollbar-track-piece {
+  background-color: #222324;
+}
+
+
+::-webkit-scrollbar-thumb:vertical {
+  width: 5px;
+  background-color: #C0E888;
+}
+
+
+.button {
+  --main-focus: #2d8cf0;
+  --font-color: #1f2937;
+  --bg-color-sub: #1f2937;
+  --bg-color: #C0E888;
+  --main-color: #1f2937;
+  position: relative;
+  width: 180px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--main-color);
+  box-shadow: 4px 4px var(--main-color);
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.button, .button__icon, .button__text {
+  transition: all 0.3s;
+}
+
+.button .button__text {
+  
+  transform: translateX(25px);
+  color: var(--font-color);
+  font-weight: 600;
+}
+
+.button .button__icon {
+  margin-left:30px;
+  position: absolute;
+  transform: translateX(109px);
+  height: 100%;
+  width: 40px;
+  background-color: var(--bg-color-sub);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button .svg {
+  width: 20px;
+  stroke: var(--bg-color);
+}
+
+.button:hover {
+  background: var(--bg-color);
+}
+
+.button:hover .button__text {
+  color: transparent;
+}
+
+.button:hover .button__icon {
+  width: 180px;
+  transform: translateX(-32px);
+}
+
+.button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px var(--main-color);
+}

@@ -1,6 +1,12 @@
 {
     "CodeGPT.apiKey": "CodeGPT Plus Beta",
     "cSpell.words": [
-        "Authen"
+        "Authen",
+        "datasource",
+        "geometryutil",
+        "latlng",
+        "latlngs",
+        "orthophoto",
+        "polylines"
     ]
 }

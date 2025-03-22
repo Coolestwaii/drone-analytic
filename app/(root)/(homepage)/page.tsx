@@ -31,7 +31,7 @@ const Page = () => {
                     LOGIN
                   </button>
               </Link>
-              <Link href="/signup">
+              <Link href="/login">
                 <button className="bg-black text-white font-semibold py-2 px-16 rounded-[10px] ml-4">
                     SIGN UP
                   </button>

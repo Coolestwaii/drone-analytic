@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import '../styles/globals.css';
 import ClientWrapper from '@/components/ClientWrapper';
+import SessionProviderWrapper from '@/components/SessionProviderWrapper'; // Import the wrapper
 
 export const metadata: Metadata = {
   title: 'Drone Analytic',
@@ -15,8 +16,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-gray-200 relative">
-        
-        <ClientWrapper>{children}</ClientWrapper>
+          <SessionProviderWrapper>
+          <ClientWrapper>{children}
+
+          </ClientWrapper>
+        </SessionProviderWrapper>
+
+
       </body>
     </html>
   );

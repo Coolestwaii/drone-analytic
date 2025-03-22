@@ -26,18 +26,6 @@ const Navbar = () => {
             </div>
           </>
         );
-      case 'Our Product':
-        return '📦 Our Product'; // Product icon and text
-      case 'How To Use':
-        return '📚 How To Use'; // Instruction icon and text
-      case 'About Us':
-        return 'ℹ️ About Us'; // Info icon and text
-      case 'Join Now':
-        return '🍽️ Join Now'; // Menu icon and text
-      case 'Menu 2':
-        return '🍽️ Menu 2'; // Menu icon and text
-      default:
-        return '❓ Unknown'; // Default icon and text
     }
   };
 
@@ -55,15 +43,15 @@ const Navbar = () => {
         <div className="flex gap-10">
           <button
             onClick={() => handleMenuClick('Welcome')}
-            className="text-[#1E1E1E] font-bold text-ms focus:outline-none"
+            className="text-white font-bold text-ms focus:outline-none"
           >
             Welcome
           </button>
           <button
             onClick={() => handleMenuClick('Our Product')}
-            className="text-[#1E1E1E] font-bold text-ms focus:outline-none"
+            className="text-white font-bold text-ms focus:outline-none opacity-100"
           >
-            Our Product
+            
           </button>
           {/* Left Navigation Links 
           <button
@@ -75,22 +63,22 @@ const Navbar = () => {
         </div>
 
         {/* Center Section with dynamic image or icon and text */}
-        <div className="flex items-center gap-2 select-none rounded-md px-4 py-2 shadow-sm">
+        <div className="flex items-center gap-2 select-none rounded-md px-4 py-2 shadow-sm opacity-100">
           <div className="text-ms font-bold text-[#1E1E1E]">{getContent(activeMenu)}</div>
         </div>
 
         {/* top Navigation Links */}
-        <div className="flex gap-10">
+        <div className="flex gap-10 opacity-100">
           <button
             onClick={() => handleMenuClick('About Us')}
-            className="text-[#1E1E1E] font-bold text-ms focus:outline-none"
+            className="text-white font-bold text-ms focus:outline-none"
           >
             About Us
           </button>
         
           <button
             onClick={() => handleMenuClick('Join Now')}
-            className="text-[#1E1E1E] font-bold text-ms focus:outline-none"
+            className="text-white font-bold text-ms focus:outline-none"
           >
             Join Now
           </button>
