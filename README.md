@@ -6,7 +6,7 @@
 # - npm (v10.7.0 is what this project is build on)
 # - Python FastAPI server must be running BEFORE running the frontend
 
-1.
+## 1.
 # -------------------------------------
 # 📦 How to run the FastAPI backend inside your Next.js project
 # -------------------------------------
@@ -74,7 +74,7 @@ $ uvicorn fastapiserver.main:app --host 0.0.0.0 --port 8000
 # -------------------------------------
 # ✅ That’s it! You now have a working FastAPI + Next.js project sharing one .env
 
-
+## 2.
 # -------------------------------------
 # 🐳 How to run Docker containers for MongoDB, PostgreSQL and NodeODM
 # -------------------------------------
@@ -124,7 +124,7 @@ $ npx prisma migrate dev --name init
 # Now go to step 3 to run the Next.js app frontend.
 
 
-3.
+## 3.
 # -------------------------------------
 # 📦 How to run Flask Server fo Machine Leaning Model Inference
 # -------------------------------------
@@ -142,7 +142,7 @@ $ FLASK_GCP_URL=https://your-ngrok-url-for-gcp.ngrok.io
 # Paste the token into the notebook cell
 # Inside the notebook, find the cell that looks like this:
 
-python
+$ python
 
 $ !ngrok config add-authtoken YOUR_NGROK_TOKEN
 # Replace YOUR_NGROK_TOKEN with your actual token.
@@ -164,7 +164,7 @@ $ !ngrok config add-authtoken YOUR_NGROK_TOKEN
 # Once done, your Flask server will be up and ready to receive inference requests 🎯
 
 
-4.
+## 4.
 # -------------------------------------
 # 📦 How to run this Next.js project
 # -------------------------------------
@@ -172,11 +172,11 @@ $ !ngrok config add-authtoken YOUR_NGROK_TOKEN
 # Install Node.js from https://nodejs.org/en/download (select v20.x)
 
 # -------------------------------------
-# ▶️ 1. Install frontend dependencies
+# ▶ 1. Install frontend dependencies
 $ npm install
 
 # -------------------------------------
-# ▶️ 2. Run the frontend in development mode
+▶ 2. Run the frontend in development mode
 $ npm run dev
 
 # The app will be available at:
@@ -189,7 +189,7 @@ $ npm run start
 
 # -------------------------------------
 # 💡 Trouble with dependencies?
-# If `npm install` fails due to OS or version mismatch, try deleting node_modules and reinstall:
+# If `npm install` fails due to OS or version mismatch, try deleting node_modules and   reinstall:
 
 $ rm -rf node_modules package-lock.json  # Linux/macOS
 $ rd /s /q node_modules package-lock.json # Windows CMD
@@ -210,12 +210,11 @@ $ npm -v
 
 
 # ⚠️ Limitations with npm run build (Production Build)
-# In some environments, especially when using Leaflet with Next.js, you may encounter errors #like:
+# In some environments, especially when using Leaflet with Next.js, you may encounter errors like:
 
 javascript
-Copy
-Edit
-ReferenceError: window is not defined
+
+% ReferenceError: window is not defined %
 
 # This happens because:
 
