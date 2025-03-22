@@ -1,4 +1,7 @@
-//components/Map.tsx
+'use client';
+
+export const dynamic = 'force-dynamic';
+
 import React, { useRef, useState, useEffect } from 'react';
 import {
   MapContainer,
@@ -16,8 +19,6 @@ import 'leaflet-draw/dist/leaflet.draw.css';
 import L from 'leaflet';
 import 'leaflet-geometryutil';
 import html2canvas from 'html2canvas';
-//import { polygonsData } from '@/services/polygon';
-//import customMarkerIcon from '@/public/camera.png';
 import { orthoOverlayService } from "@/services/orthoOverlayService";
 import { buildingOverlayService } from '@/services/buildingOverlayService';
 import { polygonOverlayService } from '@/services/polygonOverlayService';
@@ -29,7 +30,7 @@ interface Polygon {
   layerId: string;
   layer_id: string;
   color: string;
-  coordinates: [number, number][];  // Add coordinates
+  coordinates: [number, number][];  
 }
 
 let addTempMarker: (coord: L.LatLngTuple,name:string) => void = () => {}; // Placeholder

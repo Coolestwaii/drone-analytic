@@ -1,4 +1,7 @@
-//components/PolygonToolbox.tsx
+'use client';
+
+export const dynamic = 'force-dynamic';
+
 import React, { useState, useEffect,useCallback } from "react";
 import {  FiPlus, FiLayers,FiEdit, FiTrash, FiCopy,FiChevronUp,FiChevronDown,FiEye,FiEyeOff } from "react-icons/fi";
 import { polygonOverlayService,PolygonData } from '@/services/polygonOverlayService';
@@ -102,7 +105,7 @@ const submitLayerUpdate = async (layerId: string) => {
 
       setPolygons((prev) => ({ ...prev, [layerId]: transformedPolygons }));
       
-      // ✅ Ensure visibility toggle is respected
+      // Ensure visibility toggle is respected
       if (visibleLayers[layerId]) {
         polygonOverlayService.setPolygons(layerId, transformedPolygons);
       }
@@ -166,8 +169,8 @@ const submitLayerUpdate = async (layerId: string) => {
     };
 
     const deleteLayer = async (layerId: string) => {
-        const confirmDelete = window.confirm("Are you sure you want to delete this layer? This will also delete all associated polygons.");
-        if (!confirmDelete) return; // ✅ Exit if user cancels
+      const confirmDelete = typeof window !== 'undefined' && window.confirm("Are you sure you want to delete this layer?");
+      if (!confirmDelete) return; // Exit if user cancels
 
         try {
             const response = await fetch(`/api/projects/${projectId}/layer`, {
@@ -180,10 +183,10 @@ const submitLayerUpdate = async (layerId: string) => {
 
             setLayers((prev) => prev.filter((layer) => layer._id !== layerId));
 
-            // ✅ Correctly remove all polygons under this layer
+            // Correctly remove all polygons under this layer
             setPolygons((prev) => {
                 const updatedPolygons = { ...prev };
-                delete updatedPolygons[layerId]; // ✅ Remove layer key from polygons object
+                delete updatedPolygons[layerId]; // Remove layer key from polygons object
                 return updatedPolygons;
             });
 
@@ -216,10 +219,10 @@ const submitLayerUpdate = async (layerId: string) => {
     
         if (!response.ok) throw new Error("Failed to copy polygons from master");
     
-        // ✅ Append multiple polygons correctly in the object state
+        // Append multiple polygons correctly in the object state
         setPolygons((prev) => ({
             ...prev,
-            [selectedLayer]: [...(prev[selectedLayer] || []), ...responseData], // ✅ Append polygons under correct layer
+            [selectedLayer]: [...(prev[selectedLayer] || []), ...responseData], // Append polygons under correct layer
         }));
     
         alert(`Successfully copied ${responseData.length} polygons from the master dataset.`);
@@ -324,7 +327,7 @@ const submitLayerUpdate = async (layerId: string) => {
     };
 
     const deletePolygon = async (_id: string, layerId: string) => {
-      const confirmDelete = window.confirm("Are you sure you want to delete this polygon?");
+      const confirmDelete = typeof window !== 'undefined' && window.confirm("Are you sure you want to delete this polygon?");
       if (!confirmDelete) return; 
       
       try {

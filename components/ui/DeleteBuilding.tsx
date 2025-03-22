@@ -1,18 +1,26 @@
+'use client';
 import { FiTrash } from "react-icons/fi";
 
 const DeleteBuildingButton = ({ projectId }: { projectId: string }) => {
     const handleDeleteBuilding = async () => {
-        if (!projectId) {
+      if (!projectId) {
+        if (typeof window !== 'undefined') {
           alert("Invalid Project ID");
-          return;
         }
+        return;
+      }
+  
       
-        const confirmDelete = window.confirm(
+      let confirmDelete = true;
+      if (typeof window !== 'undefined') {
+        confirmDelete = window.confirm(
           "Are you sure you want to delete the building footprint? This action cannot be undone."
         );
-      
-        if (!confirmDelete) return;
-      
+      }
+  
+      if (!confirmDelete) return;
+
+
         try {
           const response = await fetch(`/api/projects/${projectId}/building`, {
             method: "DELETE",
@@ -27,8 +35,10 @@ const DeleteBuildingButton = ({ projectId }: { projectId: string }) => {
             throw new Error(`Failed to delete building footprint. Status: ${response.status}`);
           }
       
-          alert("Building footprint deleted successfully.");
-          window.location.reload(); // Reload the page to reflect deletion
+      if (typeof window !== 'undefined') {
+        alert("Building footprint deleted successfully.");
+        window.location.reload(); // only runs in browser
+      }
         } catch (error) {
           console.error("Error deleting building footprint:", error);
           alert("Error deleting building footprint. Please try again.");
@@ -47,4 +57,4 @@ const DeleteBuildingButton = ({ projectId }: { projectId: string }) => {
   );
 };
 
-export default DeleteBuildingButton;  // ✅ Ensure it's exported as default
+export default DeleteBuildingButton;  // Ensure it's exported as default

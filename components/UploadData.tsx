@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import React, { useState } from 'react';
 import { AiOutlineUpload } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';

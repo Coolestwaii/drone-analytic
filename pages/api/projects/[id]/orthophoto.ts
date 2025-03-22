@@ -8,6 +8,16 @@ import getMongoDb from "@/lib/mongo";
 
 const prisma = new PrismaClient();
 
+const requiredEnvs = ["NODEODM_URL", "FASTAPI_URL", "LOCAL_STORAGE_URL"];
+requiredEnvs.forEach((env) => {
+  if (!process.env[env]) {
+    throw new Error(`❌ Missing required environment variable: ${env}`);
+  }
+});
+
+const NODEODM_URL = process.env.NODEODM_URL;
+const FASTAPI_URL = process.env.FASTAPI_URL;
+
 export const config = {
   api: {
     bodyParser: false, // Disable automatic body parsing
@@ -29,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const projectDir = path.join(
     process.env.LOCAL_STORAGE_URL || "/home/duxmazter/droneweb/uploads",
-    "projects",
+    "projects", 
     id
   );
 
@@ -107,7 +117,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
       formData.append("options", JSON.stringify([{ name: "fast-orthophoto", value: true }]));
     
-      const nodeOdmResponse = await fetch("http://localhost:3001/task/new", {
+      const nodeOdmResponse = await fetch(`${NODEODM_URL}/task/new`, {
         method: "POST",
         body: formData,
       });
@@ -152,7 +162,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   
     const interval = setInterval(async () => {
       try {
-        const taskInfoResponse = await fetch(`http://localhost:3001/task/${taskUuid}/info`);
+        const taskInfoResponse = await fetch(`${NODEODM_URL}/task/${taskUuid}/info`);
         const taskInfo = await taskInfoResponse.json();
   
         const progress = taskInfo.progress || 0;
@@ -164,7 +174,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           clearInterval(interval);
           sendProgress(60, "Task completed. Downloading results...");
   
-          const zipUrl = `http://localhost:3001/task/${taskUuid}/download/all.zip`;
+          const zipUrl = `${NODEODM_URL}/task/${taskUuid}/download/all.zip`;
           const zipPath = path.join(projectDir, "all.zip");
   
           try {
@@ -180,7 +190,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             sendProgress(80, "Download complete. Extracting assets...");
   
             // Call FastAPI for further processing
-            const fastApiResponse = await fetch(`http://localhost:8000/projects/${id}/process`, {
+            const fastApiResponse = await fetch(`${FASTAPI_URL}/projects/${id}/process`, {
               method: "POST",
             });
   
@@ -260,7 +270,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return;
       }
 
-      const nodeOdmResponse = await fetch("http://localhost:3001/task/remove", {
+      const nodeOdmResponse = await fetch(`${NODEODM_URL}/task/remove`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

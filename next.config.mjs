@@ -10,11 +10,17 @@ const nextConfig = {
   },
   images: {
     domains: [
-      'placehold.co', 
-      'localhost', 
-      'lh3.googleusercontent.com' // Allow Google profile images
+      'placehold.co',
+      'localhost',
+      'lh3.googleusercontent.com', // Allow Google profile images
     ],
   },
+
+  
+};
+
+export const config = {
+  unstable_runtimeJS: true,
 };
 
 export default nextConfig;

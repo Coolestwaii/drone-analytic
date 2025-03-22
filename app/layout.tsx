@@ -5,8 +5,13 @@ import SessionProviderWrapper from '@/components/SessionProviderWrapper'; // Imp
 
 export const metadata: Metadata = {
   title: 'Drone Analytic',
-  description: 'Drone Analytic website for blablablablas',
+  description: 'Website for Drone Image Analysis and Assessment',
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+  },
 };
+
 
 export default function RootLayout({
   children,

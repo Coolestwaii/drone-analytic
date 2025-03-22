@@ -1,5 +1,6 @@
-//components/ClientWrapper.tsx
 'use client';
+
+export const dynamic = 'force-dynamic';
 
 import { usePathname } from 'next/navigation';
 import LeftSidebar from '@/components/LeftSidebar';

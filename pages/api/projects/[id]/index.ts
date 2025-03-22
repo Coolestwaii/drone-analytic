@@ -32,10 +32,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         try {
+            // 1. Update project in PostgreSQL
             const updatedProject = await prisma.projects.update({
                 where: { id },
                 data: { name, description },
             });
+
+            // 2. Get LOCAL_STORAGE_URL or fallback path
+            const projectFolder = path.join(
+                process.env.LOCAL_STORAGE_URL || "/home/duxmazter/droneweb/uploads",
+                "projects",
+                id
+            );
+        
+            // 3. Write ProjectDescription.txt with updated info
+            const descriptionText = `Project Name: ${updatedProject.name}\nProject Description: ${updatedProject.description || ""}\n`;
+            const descriptionFile = path.join(projectFolder, "ProjectDescription.txt");
+        
+            try {
+                fs.writeFileSync(descriptionFile, descriptionText);
+                console.log("✏️ ProjectDescription.txt updated.");
+            } catch (err) {
+                console.error("❌ Failed to update ProjectDescription.txt:", err);
+            }
+        
+            // 4. Respond to client
             res.status(200).json(updatedProject);
         } catch (error) {
             console.error("Error updating project:", error);

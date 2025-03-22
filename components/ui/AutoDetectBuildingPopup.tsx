@@ -78,9 +78,6 @@ const AutoDetectBuildingPopup: React.FC<AutoDetectBuildingPopupProps> = ({
         if (!response.ok) {
           throw new Error("Failed to start building task");
         }
-        // Optionally, if your backend returns a task UUID, you can parse and store it:
-        // const data = await response.json();
-        // setTaskUuid(data.taskUuid);
 
         setMessage("Building footprint task in progress...");
         setElapsedTime(0);

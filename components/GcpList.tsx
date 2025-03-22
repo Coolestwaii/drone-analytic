@@ -1,5 +1,6 @@
-//components/GcpList.tsx
 'use client';
+
+export const dynamic = 'force-dynamic';
 
 import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
@@ -102,23 +103,30 @@ const GcpList: React.FC<GcpListProps> = ({
     }
     }
 
-  const handleDeleteGcp = async (id: string) => {
-    if (!window.confirm("Are you sure you want to delete this GCP?")) return;
-    try {
-      const response = await fetch(`/api/projects/${projectId}/gcps`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ gcpId: id }),
-      });
-      if (response.ok) {
-        fetchGcpList();
-      } else {
-        console.error("Failed to delete GCP");
+    const handleDeleteGcp = async (id: string) => {
+      let confirmDelete = true;
+      if (typeof window !== 'undefined') {
+        confirmDelete = window.confirm("Are you sure you want to delete this GCP?");
       }
-    } catch (error) {
-      console.error("Error deleting GCP:", error);
-    }
-  };
+    
+      if (!confirmDelete) return;
+    
+      try {
+        const response = await fetch(`/api/projects/${projectId}/gcps`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ gcpId: id }),
+        });
+        if (response.ok) {
+          fetchGcpList();
+        } else {
+          console.error("Failed to delete GCP");
+        }
+      } catch (error) {
+        console.error("Error deleting GCP:", error);
+      }
+    };
+    
 
   const handleEditGcp = (gcp: Gcp) => {
     setEditingGcpId(gcp._id);

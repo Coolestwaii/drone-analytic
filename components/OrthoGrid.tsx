@@ -1,9 +1,9 @@
-/* eslint-disable  @typescript-eslint/no-explicit-any */
+'use client';
 
+export const dynamic = 'force-dynamic';
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-//import MetadataPopup from "./MetadataPopup"; // Import the popup component
 import { mapCenterService } from "@/services/mapCenterService";
 import { orthoOverlayService } from "@/services/orthoOverlayService";
 
@@ -11,6 +11,7 @@ interface OrthoThumbnailProps {
   projectId: string;
 }
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 const OrthoGrid: React.FC<OrthoThumbnailProps> = ({ projectId }) => {
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
   const [, setMetadata] = useState<Record<string, any> | null>(null);
@@ -110,27 +111,29 @@ const OrthoGrid: React.FC<OrthoThumbnailProps> = ({ projectId }) => {
     try {
       const imageUrl = `/api/projects/${projectId}/assets?action=serve&file=odm_orthophoto/odm_orthophoto.tif`;
       const response = await fetch(imageUrl);
-
+  
       if (!response.ok) {
         throw new Error("Failed to download the orthophoto.");
       }
-
-      // Convert response to blob
+  
       const blob = await response.blob();
-      const downloadUrl = window.URL.createObjectURL(blob);
-
-      // Create a link and trigger download
-      const link = document.createElement("a");
-      link.href = downloadUrl;
-      link.download = "orthophoto.tif"; // File name
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+  
+      if (typeof window !== 'undefined') {
+        const downloadUrl = window.URL.createObjectURL(blob);
+  
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.download = "orthophoto.tif";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
     } catch (error) {
       console.error("Error downloading orthophoto:", error);
       alert("Failed to download the orthophoto. Please try again.");
     }
   };
+  
 
   if (error) {
     return (

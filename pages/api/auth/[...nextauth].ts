@@ -2,6 +2,10 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
+
+const BASE_URL = process.env.BASE_URL;
+if (!BASE_URL) throw new Error("❌ BASE_URL is not defined in your environment variables");
+
 declare module "next-auth" {
   interface Session {
     user: {
@@ -30,16 +34,14 @@ export default NextAuth({
     async signIn({ user }) {
       try {
         // Check if the user already exists in the database
-        const checkResponse = await fetch(`http://localhost:3000/api/users?email=${user.email}`, {
-          method: "GET",
-        });
+        const checkResponse = await fetch(`${BASE_URL}/api/users?email=${user.email}`, { method: "GET" });
 
         let userData;
         if (checkResponse.ok) {
           userData = await checkResponse.json();
         } else if (checkResponse.status === 404) {
           // If user does not exist, create a new user
-          const createResponse = await fetch("http://localhost:3000/api/users", {
+          const createResponse = await fetch(`${BASE_URL}/api/users`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

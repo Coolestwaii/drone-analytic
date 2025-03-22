@@ -1,28 +1,86 @@
-//project/list/page.tsx
 'use client';
+
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 import withAuth from '@/hoc/withAuth';
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { projects } from '@/services';
 import { AiOutlineSearch } from 'react-icons/ai';
 import AddProject from '@/components/AddProject'; 
 import Image from 'next/image'; 
 import { FaFilter } from "react-icons/fa";
+import Head from 'next/head';
+import { getSession } from 'next-auth/react'; // Import getSession to get user_id
 
+interface Project {
+  id: string;
+  name: string;
+  description: string | null;
+  created_at: string;
+  user_id: string;
+  image_url: string;
+}
 
 const ProjectList = () => {
+  const [clientSide, setClientSide] = useState(false);
+  useEffect(() => {
+    setClientSide(true);  // Set client-side flag when the component mounts
+  }, []);
+
+
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
   const { data: session, status } = useSession(); // Get the session object
   const params = useParams<{ id: string }>(); // Get the params from the URL
   const id = params?.id || ''; // Extract id or set it to an empty string if params is null
   const router = useRouter(); // To handle navigation programmatically
-  interface Project {
-    id: string;
-    name: string;
-    description: string | null;
-    created_at: string;
-  }
+
+
+  const [projects, setProjects] = useState<Project[]>([]); // State to store projects
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+
+        
+        const session = await getSession(); // Get authenticated user session
+
+        if (!session?.user?.user_id) {
+          console.warn("❌ User ID not found in session.");
+          setProjects([]); // If no user ID, set an empty array
+          return;
+        }
+
+        const userId = session.user.user_id; // Extract user_id
+        const response = await fetch(`/api/projects?user_id=${userId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const projectsData = await response.json();
+        const formattedProjects = projectsData.map((project: Project) => ({
+          ...project,
+          created_at: project.created_at ? new Date(project.created_at).toISOString() : '',
+          image_url: project.image_url ?? '',
+        }));
+
+        setProjects(formattedProjects); // Update state with the fetched projects
+      } catch (error) {
+        console.error('❌ Error fetching projects:', error);
+        setProjects([]); // In case of error, set an empty array
+      }
+    };
+
+    fetchProjects(); // Call the function to fetch projects
+  }, []); // Empty dependency array means this runs once when the component mounts
 
   const [project, setProject] = useState<Project | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>(''); // State for search input
@@ -37,11 +95,14 @@ const ProjectList = () => {
 
   useEffect(() => {
     if (status === "authenticated" && session?.user?.user_id) {
-      console.log("User ID:", session.user.user_id); // ✅ Log the User ID
+      console.log("User ID:", session.user.user_id);
     } else {
       console.log("User is not authenticated or missing ID.");
     }
   }, [session, status]); // Run when session or auth status changes
+
+
+  
 
   useEffect(() => {
     // If the id changes, find the project based on the id from the URL
@@ -49,7 +110,7 @@ const ProjectList = () => {
     if (foundProject) {
       setProject(foundProject);
     }
-  }, [id]);
+  }, [id, projects]);
 
   // Fetch images when the component mounts
   useEffect(() => {
@@ -59,18 +120,18 @@ const ProjectList = () => {
       await Promise.all(
         projects.map(async (project) => {
           try {
-            const imageUrl = `http://localhost:3000/api/projects/${project.id}/assets?action=serve&file=odm_orthophoto/odm_orthophoto.png&size=small`;
+            const imageUrl = `${BASE_URL}/api/projects/${project.id}/assets?action=serve&file=odm_orthophoto/odm_orthophoto.png&size=small`;
             
             // Check if the image exists
             const response = await fetch(imageUrl);
             if (response.ok) {
               images[project.id] = imageUrl; // Store the image URL
             } else {
-              images[project.id] = "/placeholder.png"; // Use a default placeholder
+              images[project.id] = "/placeholder.png"; 
             }
           } catch (error) {
             console.error(`Error fetching image for project ${project.id}:`, error);
-            images[project.id] = "/placeholder.png"; // Use a default placeholder
+            images[project.id] = "/placeholder.png"; 
           }
         })
       );
@@ -79,7 +140,7 @@ const ProjectList = () => {
     };
 
     fetchProjectImages();
-  }, []);
+  }, [BASE_URL,projects]);
 
   useEffect(() => {
     let filtered = projects.filter((proj) =>
@@ -109,7 +170,7 @@ const ProjectList = () => {
     }
 
     setFilteredProjects(filtered);
-  }, [searchQuery, selectedYear, selectedMonth, dateRange]);
+  }, [searchQuery, selectedYear, selectedMonth, dateRange,projects]);
 
   // Handle search query and filter projects
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -125,10 +186,17 @@ const ProjectList = () => {
     setIsAddingProject(true); // Switch to AddProject view
   };
 
+  if (!clientSide) {
+    return null;  // Don't render the component until it's on the client-side
+  }
+
   // If no project is found, show a message
   if (!project && !isAddingProject) {
     return (
       <div className="p-6 space-y-6">
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
         {/* Header */}
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold text-black">Project</h1>
@@ -345,3 +413,5 @@ const ProjectList = () => {
 };
 
 export default withAuth(ProjectList);
+
+

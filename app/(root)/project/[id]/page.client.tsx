@@ -1,5 +1,6 @@
-//project/[id]/page.tsx
 'use client';
+
+export const dynamic = 'force-dynamic';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import withAuth from "@/hoc/withAuth";
@@ -23,11 +24,11 @@ import { FiLoader } from "react-icons/fi"; // Import a loading spinner icon
 import '../[id]/index.css';
 import { HiCamera,HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { MdAccessTime } from "react-icons/md";
-//import { CiLocationOn } from "react-icons/ci";
 import {mapCenterService} from "@/services/mapCenterService";
 import PolygonToolbox from "@/components/PolygonToolbox"; // Import the toolbox
 import Shared from "@/components/Shared";
 import { IoLocation } from "react-icons/io5";
+import Head from 'next/head';
 const ProjectPage = () => {
   const { id } = useParams() as { id: string };
   const router = useRouter();
@@ -114,7 +115,7 @@ const ProjectPage = () => {
             })
           );
         } else {
-          console.error('Failed to fetch project data');
+          console.warn('Failed to fetch project data');
         }
       } catch (error) {
         console.error('Error fetching project data:', error);
@@ -213,13 +214,6 @@ const ProjectPage = () => {
     }
   };
 
-
-
-  //const handleLocationClick = async () => {
-  //  await fetchBoundsAndUpdateMap();
- // }
-  
-  
   // Show loading animation while fetching
   if (isLoading) {
     return (
@@ -241,6 +235,9 @@ const ProjectPage = () => {
 
   return (
     <div className="p-4 relative scrollbar">
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       {isEditing ? (
         <div className="bg-gray-50 p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-bold mb-4">Edit Project</h2>

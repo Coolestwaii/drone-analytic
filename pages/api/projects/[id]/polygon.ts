@@ -4,9 +4,13 @@ import { ObjectId } from "mongodb";
 import getMongoDb from "@/lib/mongo";
 
 // Constants
+const BASE_URL = process.env.BASE_URL;
+if (!BASE_URL) {
+  throw new Error("❌ BASE_URL environment variable is not defined.");
+}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { id, layer_id } = req.query; // Project ID and optional Layer ID
+  const { id, layer_id } = req.query; // Project ID and Layer ID 
   if (!id || typeof id !== "string") {
     return res.status(400).json({ error: "Invalid project ID" });
   }
@@ -95,7 +99,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           return res.status(404).json({ error: "Master file not found for this project" });
         }
 
-        const fileURL = `http://localhost:3000/api/projects/${id}/assets?action=serve&file=building/geo_polygon_definitions.json`;
+        const fileURL = `${BASE_URL}/api/projects/${id}/assets?action=serve&file=building/geo_polygon_definitions.json`;
         console.log("📡 Fetching master file from:", fileURL);
 
         try {

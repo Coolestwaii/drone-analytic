@@ -1,7 +1,7 @@
 //api/projects/index.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
-import getMongoDb from "@/lib/mongo"; // MongoDB connection
+import getMongoDb from "@/lib/mongo"; 
 import path from "path";
 import fs from "fs";
 
@@ -11,7 +11,7 @@ interface CreateProjectPayload {
   name: string;
   description: string;
   user_id: string;
-  center?: { lat: number; lng: number }; // Optional center field
+  center?: { lat: number; lng: number }; 
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -100,8 +100,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       createProjectFolder(projectFolder);
 
-      // Image URL reference (this should be handled in assets API)
+      // Image URL reference
       const imageUrl = `projects/${projectId}`;
+
+      // ✏️ Create ProjectDescription.txt
+      const descriptionText = `Project Name: ${name}\nProject Description: ${description}\n`;
+      const descriptionPath = path.join(projectFolder, "ProjectDescription.txt");
+
+      try {
+        fs.writeFileSync(descriptionPath, descriptionText);
+        console.log("📄 ProjectDescription.txt created.");
+      } catch (err) {
+        console.error("❌ Failed to create ProjectDescription.txt:", err);
+      }
 
       // **Step 1: Create project in PostgreSQL**
       const newProject = await prisma.projects.create({
@@ -131,6 +142,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         project_path: projectFolder,
         last_updated: new Date(),
       });
+
+
 
       res.status(201).json(newProject);
     } catch (error) {

@@ -1,4 +1,7 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
+'use client';
+
+export const dynamic = 'force-dynamic';
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
@@ -106,26 +109,38 @@ const ImageGrid: React.FC<ImageGridProps> = ({ projectId, setCenter,refresh }) =
   };
 
   const handleDeleteImage = async (fileName: string) => {
-    const confirmDelete = window.confirm(`Are you sure you want to delete ${fileName}?`);
+    let confirmDelete = true;
+    if (typeof window !== "undefined") {
+      confirmDelete = window.confirm(`Are you sure you want to delete ${fileName}?`);
+    }
+  
     if (!confirmDelete) return;
   
     try {
-      const response = await fetch(`/api/projects/${projectId}/image?file=${encodeURIComponent(fileName)}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `/api/projects/${projectId}/image?file=${encodeURIComponent(fileName)}`,
+        { method: "DELETE" }
+      );
   
       if (response.ok) {
-        alert("Image deleted successfully");
+        if (typeof window !== "undefined") {
+          alert("Image deleted successfully");
+        }
         fetchImages(); // Refresh images after deletion
       } else {
         const errorData = await response.json();
-        alert(`Failed to delete image: ${errorData.error}`);
+        if (typeof window !== "undefined") {
+          alert(`Failed to delete image: ${errorData.error}`);
+        }
       }
     } catch (error) {
       console.error("Error deleting image:", error);
-      alert("Error deleting image");
+      if (typeof window !== "undefined") {
+        alert("Error deleting image");
+      }
     }
   };
+  
   
 
   return (
