@@ -28,36 +28,36 @@
 # -------------------------------------
 
 # 1. Create and activate a Python virtual environment
-python3 -m venv venv
-source venv/bin/activate
+$ python3 -m venv venv
+$ source venv/bin/activate
 
 # 2. Install required dependencies for FastAPI
-pip install --upgrade pip
-pip install -r fastapiserver/requirements.txt
+$ pip install --upgrade pip
+$ pip install -r fastapiserver/requirements.txt
 
 # 3. Run the FastAPI app (from the project root!)
-uvicorn fastapiserver.main:app --host 0.0.0.0 --port 8000
+$ uvicorn fastapiserver.main:app --host 0.0.0.0 --port 8000
 
 # -------------------------------------
 # 🪟 Windows setup steps (PowerShell or CMD):
 # -------------------------------------
 
 # 1. Create a virtual environment
-python -m venv venv
+$ python -m venv venv
 
 # 2. Activate the environment
-cd venv\Scripts
-.\activate
+$ cd venv\Scripts
+$ .\activate
 
 # 3. Go back to the Next.js root
-cd ../..
+$ cd ../..
 
 # 4. Install dependencies
-pip install --upgrade pip
-pip install -r fastapiserver/requirements.txt
+$ pip install --upgrade pip
+$ pip install -r fastapiserver/requirements.txt
 
 # 5. Run FastAPI from the root
-uvicorn fastapiserver.main:app --host 0.0.0.0 --port 8000
+$ uvicorn fastapiserver.main:app --host 0.0.0.0 --port 8000
 
 # -------------------------------------
 # 💡 ENV Usage Note:
@@ -84,15 +84,15 @@ uvicorn fastapiserver.main:app --host 0.0.0.0 --port 8000
 # 🔐 Environment Variables You Must Provide Yourself
 # Some sensitive credentials are not included in the .env file and must be generated or retrieved manually:
 
-env.local
-GOOGLE_CLIENT_ID=...
-GOOGLE_CLIENT_SECRET=...
-NEXTAUTH_SECRET=...
+$ env.local
+$ GOOGLE_CLIENT_ID=...
+$ GOOGLE_CLIENT_SECRET=...
+$ NEXTAUTH_SECRET=...
 
 
 # -------------------------------------
 # ▶️ 1. Start the containers
-docker-compose up -d
+$ docker-compose up -d
 #
 # This will start:
 # - 🟡 MongoDB at port 27017
@@ -100,7 +100,7 @@ docker-compose up -d
 # - 🟢 NodeODM at port 3001
 # -------------------------------------
 # ▶️ 2. Check that containers are running
-docker ps
+$ docker ps
 #
 # You should see:
 # - dronemongo
@@ -108,15 +108,15 @@ docker ps
 # - nodeodm
 # -------------------------------------
 # ▶️ 3. Create the Postgres app user and grant access
-docker exec -it dronepostgres psql -U postgres -d dronedb
+$ docker exec -it dronepostgres psql -U postgres -d dronedb
 #
 # Then run these SQL commands inside:
-CREATE USER appuser WITH PASSWORD '12345678'; GRANT ALL PRIVILEGES ON DATABASE dronedb TO appuser; GRANT ALL PRIVILEGES ON SCHEMA public TO appuser; \q
+$ CREATE USER appuser WITH PASSWORD '12345678'; GRANT ALL PRIVILEGES ON DATABASE dronedb TO appuser; GRANT ALL PRIVILEGES ON SCHEMA public TO appuser; \q
 #
 # -------------------------------------
 # ▶️ 4. Run Prisma to create tables
-npx prisma generate
-npx prisma migrate dev --name init
+$ npx prisma generate
+$ npx prisma migrate dev --name init
 #
 # -------------------------------------
 # Done! PostgreSQL and MongoDB are running,
@@ -133,31 +133,31 @@ npx prisma migrate dev --name init
 
 # -------------------------------------
 # ▶️ 1. Install frontend dependencies
-npm install
+$ npm install
 
 # -------------------------------------
 # ▶️ 2. Run the frontend in development mode
-npm run dev
+$ npm run dev
 
 # The app will be available at:
 # 👉 http://localhost:3000
 
 # -------------------------------------
 # 🛠 Optional: Build and start in production mode (if needed)
-npm run build
-npm run start
+$ npm run build
+$ npm run start
 
 # -------------------------------------
 # 💡 Trouble with dependencies?
 # If `npm install` fails due to OS or version mismatch, try deleting node_modules and reinstall:
 
-rm -rf node_modules package-lock.json  # Linux/macOS
-rd /s /q node_modules package-lock.json # Windows CMD
-del /s /q node_modules\* package-lock.json # PowerShell
+$ rm -rf node_modules package-lock.json  # Linux/macOS
+$ rd /s /q node_modules package-lock.json # Windows CMD
+$ del /s /q node_modules\* package-lock.json # PowerShell
 
-Then reinstall:
+# Then reinstall:
 
-npm install
+$ npm install
 
 # -------------------------------------
 # 🧪 Node and npm versions used in development:
@@ -165,8 +165,8 @@ npm install
 # - npm v10.7.0
 
 # You can check yours with:
-node -v
-npm -v
+$ node -v
+$ npm -v
 
 
 # ⚠️ Limitations with npm run build (Production Build)
@@ -186,7 +186,7 @@ ReferenceError: window is not defined
 # Workaround (Use npm run dev instead) If npm run build fails due to window is not defined, you can still run the app using:
 
 
-npm run dev
+$ npm run dev
 # This starts the app in development mode where all rendering is handled client-side, and window is accessible.
 
 #💡 Why Leaflet causes issues
